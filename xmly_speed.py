@@ -175,15 +175,19 @@ def ans_start(cookies):
         'Referer': 'https://m.ximalaya.com/growth-ssr-speed-welfare-center/page/quiz',
         'Accept-Encoding': 'gzip, deflate, br',
     }
-
-    response = requests.get(
-        'https://m.ximalaya.com/speed/web-earn/topic/start', headers=headers, cookies=cookies)
-    result = json.loads(response.text)
-    paperId = result["data"]["paperId"]
-    dateStr = result["data"]["dateStr"]
-    lastTopicId = result["data"]["topics"][2]["topicId"]
-    print(paperId, dateStr, lastTopicId)
-    return paperId, dateStr, lastTopicId
+    try:
+        response = requests.get(
+            'https://m.ximalaya.com/speed/web-earn/topic/start', headers=headers, cookies=cookies)
+        result = json.loads(response.text)
+        paperId = result["data"]["paperId"]
+        dateStr = result["data"]["dateStr"]
+        lastTopicId = result["data"]["topics"][2]["topicId"]
+        print(paperId, dateStr, lastTopicId)
+        return paperId, dateStr, lastTopicId
+    except:
+        print("网络请求异常,为避免GitHub action报错,直接跳过")
+        return
+    
 
 
 def _str2key(s):
