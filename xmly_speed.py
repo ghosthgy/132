@@ -888,7 +888,8 @@ def main(cookies):
         ans_receive(cookies, paperId, lastTopicId, 2)
         time.sleep(1)
 
-    if ans_times["remainingTimes"] > 0:
+    #if ans_times["remainingTimes"] > 0:
+    if 0 > 1:
         print("[看视频回复体力]")
         ans_restore(cookies)
         for i in range(5):
