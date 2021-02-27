@@ -894,12 +894,12 @@ def main(cookies):
     if ans_times["remainingTimes"] > 0:
         print("[看视频回复体力]")
         ans_restore(cookies)
-        for i in range(5):
-            paperId, dateStr, lastTopicId = ans_start(cookies)
-            ans_receive(cookies, paperId, lastTopicId, 1)
-            time.sleep(1)
-            ans_receive(cookies, paperId, lastTopicId, 2)
-            time.sleep(1)
+        #for i in range(5):
+        #    paperId, dateStr, lastTopicId = ans_start(cookies)
+        #    ans_receive(cookies, paperId, lastTopicId, 1)
+        #    time.sleep(1)
+        #    ans_receive(cookies, paperId, lastTopicId, 2)
+        #    time.sleep(1)
 
     lottery_info(cookies)
 
