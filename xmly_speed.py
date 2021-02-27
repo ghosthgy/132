@@ -292,13 +292,13 @@ def lottery_info(cookies):
         response = requests.post('https://m.ximalaya.com/speed/web-earn/inspire/lottery/chance',
                                  headers=headers, cookies=cookies, data=json.dumps(data))
         result = json.loads(response.text)
-        print("chance", result)
-        data = {
-            "sign": rsa_encrypt(str(result["data"]["chanceId"]), pubkey_str),
-        }
-        response = requests.post('https://m.ximalaya.com/speed/web-earn/inspire/lottery/action',
-                                 headers=headers, cookies=cookies, data=json.dumps(data))
-        print("action", response.text)
+        #print("chance", result)
+        #data = {
+        #    "sign": rsa_encrypt(str(result["data"]["chanceId"]), pubkey_str),
+        #}
+        #response = requests.post('https://m.ximalaya.com/speed/web-earn/inspire/lottery/action',
+        #                         headers=headers, cookies=cookies, data=json.dumps(data))
+        #print("action", response.text)
 
 
 def task_label(cookies):
