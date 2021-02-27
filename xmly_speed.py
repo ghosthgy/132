@@ -186,7 +186,7 @@ def ans_start(cookies):
         return paperId, dateStr, lastTopicId
     except:
         print("网络请求异常,为避免GitHub action报错,直接跳过")
-        return
+        return 0
     
 
 
