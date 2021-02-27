@@ -26,8 +26,9 @@ cookiesList = [cookies1, ]  # 多账号准备
 
 
 
+UserAgent="Mozilla/5.0 (Linux; Android 5.1; GN3003L Build/LMY47D; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045514 Mobile Safari/537.36 iting(main)/2.1.3/android_1 kdtUnion_iting/2.1.3"
 
-UserAgent = "(Linux; U; Android 9; zh-cn; MRD-AL00 Build/HUAWEIMRD-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/10.8 Mobile Safari/537.36"
+#UserAgent = "(Linux; U; Android 9; zh-cn; MRD-AL00 Build/HUAWEIMRD-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/10.8 Mobile Safari/537.36"
 # 非iOS设备的需要的自行修改,自己抓包 与cookie形式类似
 
 
@@ -175,19 +176,15 @@ def ans_start(cookies):
         'Referer': 'https://m.ximalaya.com/growth-ssr-speed-welfare-center/page/quiz',
         'Accept-Encoding': 'gzip, deflate, br',
     }
-    try:
-        response = requests.get(
-            'https://m.ximalaya.com/speed/web-earn/topic/start', headers=headers, cookies=cookies)
-        result = json.loads(response.text)
-        paperId = result["data"]["paperId"]
-        dateStr = result["data"]["dateStr"]
-        lastTopicId = result["data"]["topics"][2]["topicId"]
-        print(paperId, dateStr, lastTopicId)
-        return paperId, dateStr, lastTopicId
-    except:
-        print("网络请求异常,为避免GitHub action报错,直接跳过")
-        return 0
-    
+
+    response = requests.get(
+        'https://m.ximalaya.com/speed/web-earn/topic/start', headers=headers, cookies=cookies)
+    result = json.loads(response.text)
+    paperId = result["data"]["paperId"]
+    dateStr = result["data"]["dateStr"]
+    lastTopicId = result["data"]["topics"][2]["topicId"]
+    print(paperId, dateStr, lastTopicId)
+    return paperId, dateStr, lastTopicId
 
 
 def _str2key(s):
@@ -292,13 +289,13 @@ def lottery_info(cookies):
         response = requests.post('https://m.ximalaya.com/speed/web-earn/inspire/lottery/chance',
                                  headers=headers, cookies=cookies, data=json.dumps(data))
         result = json.loads(response.text)
-        #print("chance", result)
-        #data = {
-        #    "sign": rsa_encrypt(str(result["data"]["chanceId"]), pubkey_str),
-        #}
-        #response = requests.post('https://m.ximalaya.com/speed/web-earn/inspire/lottery/action',
-        #                         headers=headers, cookies=cookies, data=json.dumps(data))
-        #print("action", response.text)
+        print("chance", result)
+        data = {
+            "sign": rsa_encrypt(str(result["data"]["chanceId"]), pubkey_str),
+        }
+        response = requests.post('https://m.ximalaya.com/speed/web-earn/inspire/lottery/action',
+                                 headers=headers, cookies=cookies, data=json.dumps(data))
+        print("action", response.text)
 
 
 def task_label(cookies):
@@ -894,12 +891,12 @@ def main(cookies):
     if ans_times["remainingTimes"] > 0:
         print("[看视频回复体力]")
         ans_restore(cookies)
-        #for i in range(5):
-        #    paperId, dateStr, lastTopicId = ans_start(cookies)
-        #    ans_receive(cookies, paperId, lastTopicId, 1)
-        #    time.sleep(1)
-        #    ans_receive(cookies, paperId, lastTopicId, 2)
-        #    time.sleep(1)
+        for i in range(5):
+            paperId, dateStr, lastTopicId = ans_start(cookies)
+            ans_receive(cookies, paperId, lastTopicId, 1)
+            time.sleep(1)
+            ans_receive(cookies, paperId, lastTopicId, 2)
+            time.sleep(1)
 
     lottery_info(cookies)
 
